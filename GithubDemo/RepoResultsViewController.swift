@@ -46,9 +46,9 @@ class RepoResultsViewController: UIViewController {
         GithubRepo.fetchRepos(searchSettings, successCallback: { (newRepos) -> Void in
 
             // Print the returned repositories to the output window
-            for repo in newRepos {
-                print(repo)
-            }   
+//            for repo in newRepos {
+//                print(repo)
+//            }   
 
             self.repos = newRepos
             dispatch_async(dispatch_get_main_queue(), {
