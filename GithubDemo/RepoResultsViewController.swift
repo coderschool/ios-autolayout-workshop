@@ -12,6 +12,7 @@ import MBProgressHUD
 // Main ViewController
 class RepoResultsViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
     var searchBar: UISearchBar!
     var searchSettings = GithubRepoSearchSettings()
 
@@ -19,6 +20,10 @@ class RepoResultsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        repos = []
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 100
 
         // Initialize the UISearchBar
         searchBar = UISearchBar()
@@ -44,6 +49,11 @@ class RepoResultsViewController: UIViewController {
             for repo in newRepos {
                 print(repo)
             }   
+
+            self.repos = newRepos
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+            })
 
             MBProgressHUD.hideHUDForView(self.view, animated: true)
             }, error: { (error) -> Void in
@@ -74,5 +84,19 @@ extension RepoResultsViewController: UISearchBarDelegate {
         searchSettings.searchString = searchBar.text
         searchBar.resignFirstResponder()
         doSearch()
+    }
+}
+
+extension RepoResultsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return repos.count;
+    }
+
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("RepoCell") as! RepoCell
+        cell.repo = repos[indexPath.row]
+        // remove this before customizing the cell UI
+        cell.textLabel?.text = "row \(indexPath.row)"
+        return cell
     }
 }
