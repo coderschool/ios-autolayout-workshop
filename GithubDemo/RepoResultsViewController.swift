@@ -95,8 +95,6 @@ extension RepoResultsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("RepoCell") as! RepoCell
         cell.repo = repos[indexPath.row]
-        // remove this before customizing the cell UI
-        cell.textLabel?.text = "row \(indexPath.row)"
         return cell
     }
 }

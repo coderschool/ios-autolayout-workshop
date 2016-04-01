@@ -9,9 +9,14 @@
 import UIKit
 
 class RepoCell: UITableViewCell {
+
+    @IBOutlet weak var forksLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+
     var repo: GithubRepo! {
         didSet {
-            // update UI elements here
+            nameLabel.text = repo.name
+            forksLabel.text = "\(repo.forks!)"
         }
     }
 }
